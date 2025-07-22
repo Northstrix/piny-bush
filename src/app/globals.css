@@ -1,0 +1,141 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Merged & Mapped from user's themes */
+    --background-raw: 240 6% 9%; /* #111014 + #0a0a0a -> average */
+    --foreground-raw: 0 0% 100%;
+    --card-raw: 257 9% 12%; /* #24222b from theme 2 */
+    --primary-raw: 203 97% 46%; /* #0391E8 */
+    --primary-foreground-raw: 0 0% 100%;
+    --secondary-raw: 257 9% 15%; /* darker card color */
+    --accent-raw: var(--primary-raw); /* #0391E8 */
+    --destructive-raw: 3 100% 50%; /* #ff2800 from theme 1 */
+    --muted-raw: 257 9% 15%;
+    --border-raw: 240, 4%, 20%; /* #33313d from theme 2 */
+    --ring-raw: var(--primary-raw); /* #0391E8 */
+    --radius: 0.5rem; /* 8px */
+    --input-focus-outline: 220 3% 36%; /* #4e4e54 */
+    --chronicle-outline-border: 215 28% 17%; /* #27272A */
+
+    --language-selector-body-background: #09090B;
+    --language-selector-list-background: #161618;
+    --language-selector-highlight-background: #313135;
+
+    --background: var(--background-raw);
+    --foreground: var(--foreground-raw);
+    --card: var(--card-raw);
+    --card-foreground: var(--foreground-raw);
+    --popover: var(--card-raw);
+    --popover-foreground: var(--foreground-raw);
+    --primary: var(--primary-raw);
+    --primary-foreground: var(--primary-foreground-raw);
+    --secondary: var(--secondary-raw);
+    --secondary-foreground: var(--foreground-raw);
+    --muted: var(--muted-raw);
+    --muted-foreground: 0 0% 67%; /* #aaa from theme 1 */
+    --accent: var(--accent-raw);
+    --accent-foreground: var(--primary-foreground-raw);
+    --destructive: var(--destructive-raw);
+    --destructive-foreground: var(--foreground-raw);
+    --border: var(--border-raw);
+    --input: var(--border-raw);
+    --ring: var(--ring-raw);
+    --feature-card-background: hsl(var(--card)); /* Usually dark card color */
+    --lightened-background-adjacent-color: hsl(215, 16%, 30%);
+    --background-adjacent-color: hsl(240, 6%, 20%);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  .font-headline {
+    font-family: 'Poppins', sans-serif;
+  }
+  .font-body {
+    font-family: 'PT Sans', sans-serif;
+  }
+  .initial-loader {
+    position: fixed;
+    inset: 0;
+    background-color: hsl(var(--background));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+    visibility: visible;
+    opacity: 1;
+  }
+
+  body.loaded .initial-loader {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .loader-content {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem; /* 24px */
+    animation: pulse 1.5s infinite ease-in-out;
+  }
+
+  .loader-logo {
+    width: 96px;
+    height: 96px;
+    border-radius: 0.75rem; /* 12px */
+  }
+
+  .loader-app-name {
+    font-size: 3rem; /* 48px */
+    font-weight: 700;
+    color: hsl(var(--foreground));
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.7;
+    }
+  }
+
+  /* Responsive adjustments for loader */
+  @media (max-width: 768px) {
+    .loader-content {
+      gap: 1rem; /* 16px */
+    }
+    .loader-logo {
+      width: 64px;
+      height: 64px;
+      border-radius: 0.5rem; /* 8px */
+    }
+    .loader-app-name {
+      font-size: 2.25rem; /* 36px */
+    }
+  }
+
+  @media (max-width: 480px) {
+    .loader-content {
+      gap: 0.75rem; /* 12px */
+    }
+    .loader-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 0.375rem; /* 6px */
+    }
+    .loader-app-name {
+      font-size: 1.875rem; /* 30px */
+    }
+  }
+}
