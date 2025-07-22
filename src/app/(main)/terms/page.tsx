@@ -26,7 +26,7 @@ export default function TermsOfUsePage() {
       >
         <LegalSection title="1. Acceptance of Terms">
           <p>
-            By accessing or using Piny Bush, you agree to comply with and be bound by these Terms of Use. If you do not accept these Terms, you may not use the Application.
+            By accessing or using Piny Bush web application (“the Application”), you agree to comply with and be bound by these Terms of Use. If you do not accept these Terms, you may not use the Application.
           </p>
         </LegalSection>
 
