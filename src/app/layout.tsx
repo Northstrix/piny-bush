@@ -83,18 +83,28 @@ function AppDirectionController({ children }: { children: React.ReactNode }) {
   );
 }
 
-// --- New component to detect route changes and send GA page_view ---
+// AnalyticsRouteTracker as an inner component with client-only render guard
+function AnalyticsRouteTrackerWrapper() {
+  const [hasMounted, setHasMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  // Only render AnalyticsRouteTracker on client after mount
+  return hasMounted ? <AnalyticsRouteTracker /> : null;
+}
+
 function AnalyticsRouteTracker() {
   const pathname = usePathname();
   const { language } = useLanguage();
 
-  useEffect(() => {
-    // On every path change, send page_view with path and language info
+  React.useEffect(() => {
     if (typeof window !== "undefined" && typeof window.gtag === "function") {
       window.gtag('config', process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || '', {
         page_path: pathname,
       });
-      // Optionally, you can log as event instead of config to track language
+      // Optional: you can also track language in event here, if desired
       // window.gtag('event', 'page_view', { page_path: pathname, language });
     }
   }, [pathname, language]);
@@ -107,8 +117,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <LanguageProvider>
       <AppStateController>
         <AppDirectionController>
-          {/* Track SPA route changes for GA */}
-          <AnalyticsRouteTracker />
+          {/* Client-only Analytics Route Tracker to avoid SSR errors */}
+          <AnalyticsRouteTrackerWrapper />
           {children}
         </AppDirectionController>
       </AppStateController>
